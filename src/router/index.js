@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 
 Vue.use(VueRouter)
 // 路由规则
@@ -11,7 +12,8 @@ const routes = [
   },
   {
     path: '/',
-    component: ()=>import(/* webpackChunkName : 'layout'*/'@/views/layout/index'),
+    component: () => import(/* webpackChunkName : 'layout'*/'@/views/layout/index'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -64,6 +66,25 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.state.user) {
+      // 未登录跳转到登陆界面
+      return next({
+        name: 'login',
+        query: {
+          // 将本次路由的fullpath传递给登陆页面
+          redirect: to.fullPath
+        }
+      })
+    }
+    // 已经登陆
+    next()
+  } else {
+    next()
+  }
 })
 
 export default router

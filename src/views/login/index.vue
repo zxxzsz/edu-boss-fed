@@ -58,19 +58,13 @@ export default {
         await this.$refs.form.validate();
         this.isLoading = true;
         // 发送请求
-        // const { data } = await request({
-        //   method: "POST",
-        //   url: "/front/user/login",
-        //   data: qs.stringify(this.form),
-        // });
         const { data } = await login(this.form);
         this.isLoading = false;
         if (data.state === 1) {
-          console.log(data);
-          this.$router.push({
-            name: "home",
-          });
           this.$message.success(data.message);
+          // 将用户信息储存到vuex
+          this.$store.commit("setUser", data.content);
+          this.$router.push(this.$route.query.redirect || '/');
         } else {
           this.$message.error(data.message);
         }
