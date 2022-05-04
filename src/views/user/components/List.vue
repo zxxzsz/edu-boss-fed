@@ -1,0 +1,116 @@
+// user/components/list.vue
+<template>
+  <el-card>
+    <div slot="header">
+      <el-form
+      :inline="true"
+      :model="filterParams"
+      ref="filter-form">
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="filterParams.phone"></el-input>
+        </el-form-item>
+        <el-form-item label="注册时间" prop="rangeDate">
+          <el-date-picker
+            v-model="filterParams.rangeDate"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            value-format="yyyy-MM-dd"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            :disabled="isLoading"
+          >重置</el-button>
+          <el-button
+            type="primary"
+            :disabled="isLoading"
+          >查询</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <el-table
+      :data="users"
+      style="width: 100%"
+      v-loading="isLoading"
+    >
+      <el-table-column
+        prop="id"
+        label="用户ID"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="头像"
+        width="100">
+        <template slot-scope="scope">
+          <img width="30px" :src="scope.row.portrait || 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'">
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="用户名">
+      </el-table-column>
+      <el-table-column
+        prop="phone"
+        label="手机号">
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
+        label="注册时间">
+        <!-- 用户状态操作（服务端没有开放权限，只能演示） -->
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="状态"
+        width="80">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="ENABLE"
+            inactive-value="DISABLE"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="handleForbidUser(scope.row)"
+          >
+          </el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="address"
+        label="操作">
+        <template >
+          <el-button
+            type="text"
+          >分配角色</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- 设置分配角色的 Dialog 组件 -->
+    <el-dialog
+      title="分配角色"
+      :visible.sync="dialogVisible"
+      width="50%">
+      <!-- 下拉菜单组件位置 -->
+      <el-select v-model="roleIdList" multiple placeholder="请选择">
+        <el-option
+          v-for="item in roles"
+          :key="item.value"
+          :label="item.name"
+          :value="item.id">
+        </el-option>
+      </el-select>
+      <span slot="footer" class="dialog-footer">
+        <el-button >取 消</el-button>
+        <el-button type="primary" >确 定</el-button>
+      </span>
+    </el-dialog>
+  </el-card>
+</template>
+
+<script>
+
+</script>
+
+<style lang="scss" scoped></style>
