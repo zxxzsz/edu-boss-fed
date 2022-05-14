@@ -14,10 +14,11 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button >取消</el-button>
+        <el-button>取消</el-button>
         <el-button
           type="primary"
-        >确认</el-button>
+        >确认
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -50,15 +51,9 @@ export default {
     }
   },
   methods: {
-    async loadRole () {
-     
-    },
-    onCancel () {
-      
-    },
-    async onSubmit () {
-     
-    }
+    loadRole () {},
+    onCancel () {},
+    onSubmit () {}
   }
 }
 </script>

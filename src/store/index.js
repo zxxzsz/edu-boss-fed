@@ -9,12 +9,11 @@ export default new Vuex.Store({
     // 用于登陆成功之后保存用户信息,初始值尝试读取本地存储
     user: JSON.parse(window.localStorage.getItem('user') || null)
   },
-  getters: {
-  },
+  getters: {},
   // 用来修改store里的值
   mutations: {
     // 储存用户数据
-    setUser(state, payload) {
+    setUser (state, payload) {
       // 将payload转换为json在存储
       state.user = JSON.parse(payload)
       // 将payload数据进行本地存储
@@ -22,8 +21,6 @@ export default new Vuex.Store({
     }
   },
   // 异步功能
-  actions: {
-  },
-  modules: {
-  }
+  actions: {},
+  modules: {}
 })

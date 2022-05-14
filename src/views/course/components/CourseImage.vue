@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { uploadCourseImage } from '@/services/course'
+import {uploadCourseImage} from '@/services/course'
 
 export default {
   name: 'CourseImage',
@@ -44,7 +44,7 @@ export default {
       default: 2
     }
   },
-  data () {
+  data() {
     return {
       // 用于保存上传状态
       isUploading: false,
@@ -54,12 +54,12 @@ export default {
   },
   methods: {
     // 图片上传处理函数
-    async handleUpload (option) {
+    async handleUpload(option) {
       this.isUploading = true
       const fd = new FormData()
       fd.append('file', option.file)
       // 发送上传请求
-      const { data } = await uploadCourseImage(fd, event => {
+      const {data} = await uploadCourseImage(fd, event => {
         this.precentage = Math.floor(event.loaded / event.total * 100)
       })
       if (data.code === '000000') {
@@ -70,11 +70,11 @@ export default {
       }
     },
     // 上传图片成功回调
-    handleAvatarSuccess (res, file) {
+    handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
     },
     // 上传前的回调
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < this.limit
 
@@ -98,9 +98,11 @@ export default {
   position: relative;
   overflow: hidden;
 }
+
 ::v-deep .avatar-uploader .el-upload:hover {
   border-color: #409EFF;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -109,6 +111,7 @@ export default {
   line-height: 178px;
   text-align: center;
 }
+
 .avatar {
   width: 178px;
   height: 178px;

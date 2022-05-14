@@ -7,6 +7,7 @@
 
 <script>
 import CreateOrEdit from './components/CreateOrEdit'
+
 export default {
   name: 'MenuEdit',
   components: {

@@ -170,14 +170,16 @@
             <el-button
               type="primary"
               @click="handleSave"
-            >保存</el-button>
+            >保存
+            </el-button>
           </el-form-item>
         </div>
         <!-- 下一步按钮 -->
         <el-form-item v-if="activeStep !== steps.length - 1">
           <el-button
             @click="activeStep++"
-          >下一步</el-button>
+          >下一步
+          </el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -186,7 +188,7 @@
 
 <script>
 import CourseImage from './CourseImage'
-import { saveOrUpdateCourse, getCourseById } from '@/services/course'
+import {saveOrUpdateCourse, getCourseById} from '@/services/course'
 import TextEditor from '@/components/TextEditor'
 
 export default {
@@ -204,23 +206,23 @@ export default {
     CourseImage,
     TextEditor
   },
-  created () {
+  created() {
     // 检测当前是否为编辑功能，如果是，根据 courseId 请求课程数据
     if (this.isEdit) {
       this.loadCourse()
     }
   },
-  data () {
+  data() {
     return {
       // 步骤的进度
       activeStep: 0,
       // 步骤条的相关信息
       steps: [
-        { id: 1, title: '基本信息', icon: 'el-icon-edit' },
-        { id: 2, title: '课程封面', icon: 'el-icon-upload' },
-        { id: 3, title: '销售信息', icon: 'el-icon-picture' },
-        { id: 4, title: '秒杀信息', icon: 'el-icon-picture' },
-        { id: 5, title: '课程详情', icon: 'el-icon-picture' }
+        {id: 1, title: '基本信息', icon: 'el-icon-edit'},
+        {id: 2, title: '课程封面', icon: 'el-icon-upload'},
+        {id: 3, title: '销售信息', icon: 'el-icon-picture'},
+        {id: 4, title: '秒杀信息', icon: 'el-icon-picture'},
+        {id: 5, title: '课程详情', icon: 'el-icon-picture'}
       ],
       // 本地预览图片地址
       imageUrl: '',
@@ -287,8 +289,8 @@ export default {
   },
   methods: {
     // 编辑功能根据 ID 加载课程信息
-    async loadCourse () {
-      const { data } = await getCourseById(this.courseId)
+    async loadCourse() {
+      const {data} = await getCourseById(this.courseId)
       if (data.code === '000000') {
         // - 判断当前课程是否为开启秒杀的状态，如果未开启秒杀，需要初始化数据
         if (!data.data.activityCourse) {
@@ -303,8 +305,8 @@ export default {
       }
     },
     // 保存功能
-    async handleSave () {
-      const { data } = await saveOrUpdateCourse(this.course)
+    async handleSave() {
+      const {data} = await saveOrUpdateCourse(this.course)
       if (data.code === '000000') {
         this.$message.success(`${this.isEdit ? '编辑' : '添加'}课程成功`)
         this.$router.push({

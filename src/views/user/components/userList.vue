@@ -1,18 +1,17 @@
-// user/components/list.vue
 <template>
   <el-card>
     <div slot="header">
       <el-form
-      :inline="true"
-      :model="filterParams"
-      ref="filter-form">
+        :inline="true"
+        :model="filterParams"
+        ref="filter-form">
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="filterParams.phone"></el-input>
         </el-form-item>
         <el-form-item label="注册时间" prop="rangeDate">
           <el-date-picker
             v-model="filterParams.rangeDate"
-            type="datetimerange"
+            type="datetime-range"
             range-separator="至"
             start-placeholder="开始时间"
             end-placeholder="结束时间"
@@ -22,11 +21,13 @@
         <el-form-item>
           <el-button
             :disabled="isLoading"
-          >重置</el-button>
+          >重置
+          </el-button>
           <el-button
             type="primary"
             :disabled="isLoading"
-          >查询</el-button>
+          >查询
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -45,7 +46,8 @@
         label="头像"
         width="100">
         <template slot-scope="scope">
-          <img width="30px" :src="scope.row.portrait || 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'">
+          <img width="30px"
+               :src="scope.row.portrait || 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'">
         </template>
       </el-table-column>
       <el-table-column
@@ -80,10 +82,11 @@
       <el-table-column
         prop="address"
         label="操作">
-        <template >
+        <template>
           <el-button
             type="text"
-          >分配角色</el-button>
+          >分配角色
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -102,8 +105,8 @@
         </el-option>
       </el-select>
       <span slot="footer" class="dialog-footer">
-        <el-button >取 消</el-button>
-        <el-button type="primary" >确 定</el-button>
+        <el-button>取 消</el-button>
+        <el-button type="primary">确 定</el-button>
       </span>
     </el-dialog>
   </el-card>

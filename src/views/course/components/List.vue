@@ -24,7 +24,8 @@
         <el-form-item>
           <el-button :disabled="isLoading" @click="handleReset">重置</el-button>
           <el-button type="primary" :disabled="isLoading" @click="handleFilter"
-            >查询</el-button
+          >查询
+          </el-button
           >
         </el-form-item>
       </el-form>
@@ -40,7 +41,8 @@
               name: 'course-create',
             })
           "
-          >添加课程</el-button
+        >添加课程
+        </el-button
         >
       </div>
       <!-- 课程展示区域 -->
@@ -49,11 +51,11 @@
         v-loading="isLoading"
         style="width: 100%; margin-bottom: 20px"
       >
-        <el-table-column prop="id" label="ID" width="100"> </el-table-column>
+        <el-table-column prop="id" label="ID" width="100"></el-table-column>
         <el-table-column prop="courseName" label="课程名称" width="230">
         </el-table-column>
-        <el-table-column prop="price" label="价格"> </el-table-column>
-        <el-table-column prop="sortNum" label="排序"> </el-table-column>
+        <el-table-column prop="price" label="价格"></el-table-column>
+        <el-table-column prop="sortNum" label="排序"></el-table-column>
         <el-table-column prop="status" label="上架状态">
           <template slot-scope="scope">
             <el-switch
@@ -89,8 +91,8 @@
 
 <script>
 export default {
-  name: "CourseList",
-};
+  name: 'CourseList'
+}
 </script>
 
 <style lang="scss" scoped>

@@ -6,6 +6,7 @@
 
 <script>
 import CreateOrEdit from './components/CreateOrEdit'
+
 export default {
   name: 'CourseCreate',
   components: {

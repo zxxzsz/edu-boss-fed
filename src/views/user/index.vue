@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import UserList from './components/List'
+import UserList from './components/userList'
 
 export default {
   name: 'UserIndex',

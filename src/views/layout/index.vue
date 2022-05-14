@@ -18,19 +18,20 @@
 
 <script>
 // 引入侧边栏组件
-import AppAside from "./components/AppAside.vue";
-import AppHeader from "./components/AppHeader.vue";
+import AppAside from './components/AppAside.vue'
+import AppHeader from './components/AppHeader.vue'
 
 export default {
-  name: "Layout",
-  components: { AppAside, AppHeader },
-};
+  name: 'LayoutIndex',
+  components: { AppAside, AppHeader }
+}
 </script>
 
 <style lang="scss" scoped>
 .el-container {
   height: 100vh;
 }
+
 .el-header {
   background-color: #fff;
 }

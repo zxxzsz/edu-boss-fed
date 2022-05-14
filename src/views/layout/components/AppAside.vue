@@ -55,13 +55,14 @@
 
 <script>
 export default {
-  name: "AppAside",
-};
+  name: 'AppAside'
+}
 </script>
 
 <style scoped lang="scss">
 .app-aside {
   height: 100%;
+
   .el-menu {
     height: 100%;
     border-right: 0 none;

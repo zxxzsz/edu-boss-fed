@@ -15,7 +15,8 @@
           <el-button
             type="primary"
             @click="handleUpload"
-          >开始上传</el-button>
+          >开始上传
+          </el-button>
           <el-button
             @click="$router.push({
               name: 'course-section',
@@ -23,11 +24,12 @@
                 courseId
               }
             })"
-          >返回</el-button>
+          >返回
+          </el-button>
         </el-form-item>
         <el-form-item>
           <p v-if="uploadPercent !== 0">视频上传中: {{ uploadPercent }}%</p>
-          <p v-if="isUploadSuccess">视频转码中：{{ isTranscodeSuccess ? '完成': '正在转码中...' }}</p>
+          <p v-if="isUploadSuccess">视频转码中：{{ isTranscodeSuccess ? '完成' : '正在转码中...' }}</p>
         </el-form-item>
       </el-form>
     </el-card>
@@ -51,7 +53,7 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
       // 图片上传后的地址，用于视频上传凭证请求
       imageURL: '',
@@ -67,11 +69,11 @@ export default {
       isTranscodeSuccess: false
     }
   },
-  created () {
+  created() {
     this.initUploader()
   },
   methods: {
-    handleUpload () {
+    handleUpload() {
       // 考虑到可能重复使用某个组件进行上传处理，点击上传时，将数据重置
       this.uploadPercent = 0
       this.isUploadSuccess = false
@@ -85,7 +87,7 @@ export default {
       // 开始上传
       uploader.startUpload()
     },
-    initUploader () {
+    initUploader() {
       this.uploader = new window.AliyunUpload.Vod({
         // 阿里账号ID，必须有值
         userId: '1618139964448548',
@@ -105,14 +107,14 @@ export default {
           // 检测是图片或视频
           if (uploadInfo.isImage) {
             // 图片处理
-            const { data } = await aliyunImageUploadAddressAndAuth()
+            const {data} = await aliyunImageUploadAddressAndAuth()
             if (data.code === '000000') {
               uploadAddressAndAuth = data.data
               this.imageURL = uploadAddressAndAuth.imageURL
             }
           } else {
             // 视频处理
-            const { data } = await aliyunVideoUploadAddressAndAuth({
+            const {data} = await aliyunVideoUploadAddressAndAuth({
               fileName: uploadInfo.file.name,
               imageUrl: this.imageURL
             })
@@ -150,7 +152,7 @@ export default {
           this.isUploadSuccess = true
           const lessonId = this.$route.query.lessonId
           // 发送视频转码请求
-          const { data } = await aliyunVideoTranscode({
+          const {data} = await aliyunVideoTranscode({
             lessonId,
             coverImageUrl: this.imageURL,
             fileId: this.videoId,
@@ -159,7 +161,7 @@ export default {
           if (data.code === '000000') {
             // 轮询转码进度
             const timer = setInterval(async () => {
-              const { data } = await getAliyunTranscodePercent(lessonId)
+              const {data} = await getAliyunTranscodePercent(lessonId)
               if (data.code === '000000') {
                 if (data.data === 100) {
                   this.isTranscodeSuccess = true

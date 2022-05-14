@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios from 'axios'
 import store from '@/store'
 // 通过局部引入方式引入message
 import { Message } from 'element-ui'
 // 引入router
-import router from "@/router"
+import router from '@/router'
 import qs from 'qs'
 
 // 创建axios实例
@@ -12,7 +12,7 @@ const request = axios.create({
   // baseURL: ''
 })
 
-function getBaseUrl(url) {
+function getBaseUrl (url) {
   if (url.startsWith('/boss')) {
     return 'http://eduboss.lagounews.com'
   } else {
@@ -24,14 +24,14 @@ request.interceptors.request.use(function (config) {
   // 判断config.url的前缀进行设置baseurl
   config.baseURL = getBaseUrl(config.url)
   // 统一设置token信息
-  const { user } = store.state;
+  const { user } = store.state
   if (user && user.access_token) {
     config.headers.Authorization = user.access_token
   }
   return config
 })
 
-function redirectLogin() {
+function redirectLogin () {
   router.push({
     name: 'login',
     query: {
@@ -41,17 +41,18 @@ function redirectLogin() {
   })
 }
 
-let isRefreshing = false;
+let isRefreshing = false
 // 存储因为等待token刷新挂起的请求
 let requestArr = []
 // 响应拦截器
 request.interceptors.response.use(function (response) {
   return response
 }, function (error) {
+  console.log(store.state)
   if (error.response) {
     // 请求发送成功，响应接收完毕，但是状态码为失败
     // 判断失败的状态码情况
-    const { status } = error.response;
+    const { status } = error.response
     let errorMessage = ''
     if (status === 400) {
       errorMessage = '请求参数错误'
@@ -69,7 +70,7 @@ request.interceptors.response.use(function (response) {
           // 当前函数调用后会自动发送本次失败的请求
           request(error.config)
         })
-        return;
+        return
       }
       isRefreshing = true
       // token无效（错误token，过期token）
@@ -79,9 +80,10 @@ request.interceptors.response.use(function (response) {
         data: qs.stringify({
           refreshtoken: store.state.user.refresh_token
         }).then(res => {
+          console.log(res)
           // 刷新token失败
           if (res.data.state !== 1) {
-            //清除无效的用户信息
+            // 清除无效的用户信息
             store.commit('setUser', null)
             // 跳转到登陆页
             redirectLogin()
@@ -93,10 +95,14 @@ request.interceptors.response.use(function (response) {
           // error.config本次请求失败的配置对象
           requestArr.forEach(callback => callback())
           // 清除数组
-          requestArr = [];
+          requestArr = []
           // 将本次请求发送
           return request(error.config)
-        }).catch(err => { }).finally(() => isRefreshing = false)
+        }).catch(err => {
+          console.log(err)
+        }).finally(() => {
+          isRefreshing = false
+        })
       })
     } else if (status === 403) {
       errorMessage = '没有权限，请联系管理员'
@@ -108,10 +114,10 @@ request.interceptors.response.use(function (response) {
     Message.error(errorMessage)
   } else if (error.request) {
     // 请求发送成功，但是未收到响应
-    Message.error('请求超时，请重试');
+    Message.error('请求超时，请重试')
   } else {
     // 意料之外的错误
-    Message.error('Error', error.message);
+    Message.error('Error', error.message)
   }
   // 将本次的错误对象继续往后抛出，让接受相应的处理函数进行操作
   return Promise.reject(error)

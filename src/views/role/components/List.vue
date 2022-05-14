@@ -10,13 +10,14 @@
             <el-button
               type="primary"
               v-loading="isLoading"
-            >查询</el-button>
-            <el-button >重置</el-button>
+            >查询
+            </el-button>
+            <el-button>重置</el-button>
           </el-form-item>
         </el-form>
       </div>
       <!-- 显示对话框 -->
-      <el-button >添加角色</el-button>
+      <el-button>添加角色</el-button>
       <el-table
         :data="roles"
         style="width: 100%"
@@ -43,22 +44,26 @@
           align="center"
           width="150px"
         >
-          <template >
+          <template>
             <div>
               <el-button
                 type="text"
-              >分配菜单</el-button>
+              >分配菜单
+              </el-button>
               <el-button
                 type="text"
-              >分配资源</el-button>
+              >分配资源
+              </el-button>
             </div>
             <div>
               <el-button
                 type="text"
-              >编辑</el-button>
+              >编辑
+              </el-button>
               <el-button
                 type="text"
-              >删除</el-button>
+              >删除
+              </el-button>
             </div>
           </template>
         </el-table-column>
@@ -88,8 +93,8 @@ export default {
   name: 'RoleList',
   components: {
     CreateOrEdit
-  },
-  
+  }
+
 }
 </script>
 
