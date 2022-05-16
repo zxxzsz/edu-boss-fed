@@ -48,7 +48,6 @@ let requestArr = []
 request.interceptors.response.use(function (response) {
   return response
 }, function (error) {
-  console.log(store.state)
   if (error.response) {
     // 请求发送成功，响应接收完毕，但是状态码为失败
     // 判断失败的状态码情况
@@ -79,30 +78,29 @@ request.interceptors.response.use(function (response) {
         url: '/front/user/refresh_token',
         data: qs.stringify({
           refreshtoken: store.state.user.refresh_token
-        }).then(res => {
-          console.log(res)
-          // 刷新token失败
-          if (res.data.state !== 1) {
-            // 清除无效的用户信息
-            store.commit('setUser', null)
-            // 跳转到登陆页
-            redirectLogin()
-            return Promise.reject(error)
-          }
-          // 刷新token
-          store.commit('setUser', res.data.content)
-          // 重新发送失败的请求
-          // error.config本次请求失败的配置对象
-          requestArr.forEach(callback => callback())
-          // 清除数组
-          requestArr = []
-          // 将本次请求发送
-          return request(error.config)
-        }).catch(err => {
-          console.log(err)
-        }).finally(() => {
-          isRefreshing = false
         })
+      }).then(res => {
+        // 刷新token失败
+        if (res.data.state !== 1) {
+          // 清除无效的用户信息
+          store.commit('setUser', null)
+          // 跳转到登陆页
+          redirectLogin()
+          return Promise.reject(error)
+        }
+        // 刷新token
+        store.commit('setUser', res.data.content)
+        // 重新发送失败的请求
+        // error.config本次请求失败的配置对象
+        requestArr.forEach(callback => callback())
+        // 清除数组
+        requestArr = []
+        // 将本次请求发送
+        return request(error.config)
+      }).catch((err) => {
+        console.log(err)
+      }).finally(() => {
+        isRefreshing = false
       })
     } else if (status === 403) {
       errorMessage = '没有权限，请联系管理员'
