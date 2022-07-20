@@ -1,0 +1,26 @@
+import request from '@/utils/request'
+
+// 获取章节和课时
+export const getSectionAndLesson = courseId => {
+  return request({
+    method: 'GET',
+    url: '/boss/course/section/getSectionAndLesson',
+    params: { courseId }
+  })
+}
+// 新增/修改章节
+export const saveOrUpdateSection = data => {
+  return request({
+    method: 'POST',
+    url: '/boss/course/section/saveOrUpdateSection',
+    data
+  })
+}
+// 新增/修改课时
+export const saveOrUpdateLesson = data => {
+  return request({
+    method: 'POST',
+    url: '/boss/course/lesson/saveOrUpdate',
+    data
+  })
+}

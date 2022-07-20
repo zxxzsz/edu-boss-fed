@@ -1,14 +1,8 @@
 <template>
   <div class="course-section">
     <el-card>
-      <el-tree
-        v-loading="isLoading"
-        :data="sections"
-        :props="defaultProps"
-        draggable
-        :allow-drop="handleAllowDrop"
-        @node-drop="handleNodeDrop"
-      >
+      <el-tree v-loading="isLoading" :data="sections" :props="defaultProps" draggable :allow-drop="handleAllowDrop"
+        @node-drop="handleNodeDrop">
         <div class="inner" slot-scope="{ node, data }">
           <!-- 内容设置 -->
           <span>{{ node.label }}</span>
@@ -20,9 +14,8 @@
           </span>
           <span v-else class="actions">
             <el-button>编辑</el-button>
-            <el-button
-
-            >上传视频</el-button>
+            <el-button @click="$router.push({ name: 'course-video', params: { courseId }, query: { lessonId: data.id } })">
+              上传视频</el-button>
             <el-button>状态</el-button>
           </span>
         </div>
@@ -32,7 +25,7 @@
 </template>
 
 <script>
-import {getSectionAndLesson, saveOrUpdateSection, saveOrUpdateLesson} from '@/services/course-section'
+import { getSectionAndLesson, saveOrUpdateLesson, saveOrUpdateSection } from '@/services/course-section'
 
 export default {
   name: 'CourseSection',
@@ -42,16 +35,16 @@ export default {
       required: true
     }
   },
-  created() {
+  created () {
     this.loadSection()
   },
-  data() {
+  data () {
     return {
       // 章节信息
       sections: [],
       defaultProps: {
         children: 'lessonDTOS',
-        label(data) {
+        label (data) {
           // data 是章节或课时的时候，label 的属性名不同，需要检测后使用
           return data.sectionName || data.theme
         }
@@ -61,7 +54,7 @@ export default {
   },
   methods: {
     // 节点拖拽完毕后的处理函数
-    async handleNodeDrop(draggingNode, dropNode, type, event) {
+    async handleNodeDrop (draggingNode, dropNode, type, event) {
       this.isLoading = true
       try {
         // 由于有很多章节与课时，需要给每个章节与课时都进行最新的排序顺序的请求
@@ -88,13 +81,13 @@ export default {
       this.isLoading = false
     },
     // 节点拖拽处理函数
-    handleAllowDrop(draggingNode, dropNode, type) {
+    handleAllowDrop (draggingNode, dropNode, type) {
       // - 规则1： 只能同级移动，type 不能为 'inner'
       // - 规则2： 课时不能移动到其他章节中
       return type !== 'inner' && draggingNode.data.sectionId === dropNode.data.sectionId
     },
-    async loadSection() {
-      const {data} = await getSectionAndLesson(this.courseId)
+    async loadSection () {
+      const { data } = await getSectionAndLesson(this.courseId)
       if (data.code === '000000') {
         this.sections = data.data
       }
